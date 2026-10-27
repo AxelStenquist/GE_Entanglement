@@ -1,0 +1,6 @@
+# Multi-pulse entanglement model
+
+* functions.py: time, field, pulse-area, bound-state amplitude, continuum amplitude, and entanglement functions.
+* general\_functions: atomic unit and intensity/field strength conversion
+* entanglement\_example.ipynb: interactive notebook that imports and uses the functions.
+
