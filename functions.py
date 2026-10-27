@@ -36,13 +36,12 @@ def _validate_pulses(t_Is, EI, tau_I, typ):
     return t_Is, EI, tau_I
 
 def def_t_array(typ, t_Is, tau_I):
-    tau_max = max(tau_I)
 
     if typ == "ftop":        
-        t = np.linspace(-tau_max*0.5 + t_Is[0], tau_max*0.5 + t_Is[-1], 500)
+        t = np.linspace(-tau_I[0]*0.5 + t_Is[0], tau_I[-1]*0.5 + t_Is[-1], 500)
 
     else:  # typ == 'gaus'
-        t = np.linspace(-tau_max*2.5 + t_Is[0], tau_max*2.5 + t_Is[-1], 500)
+        t = np.linspace(-tau_I[0]*2.5 + t_Is[0], tau_I[-1]*2.5 + t_Is[-1], 500)
         
     return t
 
