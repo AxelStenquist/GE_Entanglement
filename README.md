@@ -1,4 +1,4 @@
-# Multi-pulse entanglement model: This project calculates entanglement for multiple Gaussian or flat-top pulses.
+Multi-pulse entanglement model: This project calculates ion-electron entanglement for sequences of Gaussian or flat-top pulses.
 
 * functions.py: time, field, pulse-area, bound-state amplitude, continuum amplitude, and entanglement functions.
 * general\_functions: atomic unit and intensity/field strength conversion
