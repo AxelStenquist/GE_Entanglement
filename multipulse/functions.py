@@ -35,15 +35,27 @@ def _validate_pulses(t_Is, EI, tau_I, typ):
 
     return t_Is, EI, tau_I
 
-def def_t_array(typ, t_Is, tau_I):
+def def_t_array(typ, t_Is, tau_I, n_points=500, gaussian_extent=2.5):
+    """Construct a time grid covering the complete pulse sequence.
 
-    if typ == "ftop":        
-        t = np.linspace(-tau_I[0]*0.5 + t_Is[0], tau_I[-1]*0.5 + t_Is[-1], 500)
+    ``gaussian_extent`` is measured in pulse widths on each side of a Gaussian
+    pulse centre. Flat-top pulses are covered exactly from their first turn-on
+    to their last turn-off.
+    """
+    t_Is = np.asarray(t_Is, dtype=float)
+    tau_I = np.asarray(tau_I, dtype=float)
 
-    else:  # typ == 'gaus'
-        t = np.linspace(-tau_I[0]*2.5 + t_Is[0], tau_I[-1]*2.5 + t_Is[-1], 500)
-        
-    return t
+    if typ not in _VALID_PULSE_TYPES:
+        raise ValueError("typ must be either 'ftop' or 'gaus'.")
+    if t_Is.ndim != 1 or tau_I.ndim != 1 or len(t_Is) != len(tau_I):
+        raise ValueError("t_Is and tau_I must be one-dimensional arrays of equal length.")
+    if len(t_Is) == 0 or np.any(tau_I <= 0):
+        raise ValueError("At least one positive pulse width must be supplied.")
+
+    extent = 0.5 if typ == "ftop" else float(gaussian_extent)
+    t_start = np.min(t_Is - extent * tau_I)
+    t_end = np.max(t_Is + extent * tau_I)
+    return np.linspace(t_start, t_end, int(n_points))
 
 def calc_field(t, t_Is, EI, tau_I, omega_0, typ):
     """Calculate the total electric field and pulse envelopes.
