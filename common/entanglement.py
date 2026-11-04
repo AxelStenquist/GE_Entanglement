@@ -46,10 +46,10 @@ def entanglement_ab(eps, c_a, c_b):
     if len(eps) < 2:
         raise ValueError("eps must contain at least two grid points.")
 
-    aa = np.trapz(np.conj(c_a) * c_a, x=eps)
-    ab = np.trapz(np.conj(c_a) * c_b, x=eps)
-    ba = np.trapz(np.conj(c_b) * c_a, x=eps)
-    bb = np.trapz(np.conj(c_b) * c_b, x=eps)
+    aa = np.trapezoid(np.conj(c_a) * c_a, x=eps)
+    ab = np.trapezoid(np.conj(c_a) * c_b, x=eps)
+    ba = np.trapezoid(np.conj(c_b) * c_a, x=eps)
+    bb = np.trapezoid(np.conj(c_b) * c_b, x=eps)
 
     rho_ab = np.array([[aa, ab], [ba, bb]], dtype=complex)
     return _von_neumann_entropy(rho_ab)
@@ -83,11 +83,11 @@ def entanglement_abcd(eps, eps_l, c_a, c_b, c_c, c_d):
         )
 
     def int_eps(values):
-        return np.trapz(values, x=eps, axis=0)
+        return np.trapezoid(values, x=eps, axis=0)
 
     def int_eps_epsl(values):
-        photon_integral = np.trapz(values, x=eps_l, axis=1)
-        return np.trapz(photon_integral, x=eps)
+        photon_integral = np.trapezoid(values, x=eps_l, axis=1)
+        return np.trapezoid(photon_integral, x=eps)
 
     # a-b subspace
     aa = int_eps(np.conj(c_a) * c_a)
@@ -146,7 +146,7 @@ def entanglement_abcd(eps, eps_l, c_a, c_b, c_c, c_d):
         np.conj(c_c)[:, :, None] * c_c[:, None, :]
         + np.conj(c_d)[:, :, None] * c_d[:, None, :]
     )
-    rho_llp = np.trapz(rho_llp_integrand, x=eps, axis=0)
+    rho_llp = np.trapezoid(rho_llp_integrand, x=eps, axis=0)
     ent_ll = _von_neumann_entropy(rho_llp)
 
     return ent_ab, ent_ac, ent_abcd, ent_abc, ent_ll

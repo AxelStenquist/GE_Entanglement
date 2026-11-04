@@ -112,10 +112,10 @@ def plot_spontaneous_spectra(
     photon_label="Photon energy (a.u.)",
 ):
     """Plot electron and photon marginals for the four continuum channels."""
-    p_c_eps = np.trapz(np.abs(c_c) ** 2, x=eps_l, axis=1)
-    p_d_eps = np.trapz(np.abs(c_d) ** 2, x=eps_l, axis=1)
-    p_c_l = np.trapz(np.abs(c_c) ** 2, x=eps, axis=0)
-    p_d_l = np.trapz(np.abs(c_d) ** 2, x=eps, axis=0)
+    p_c_eps = np.trapezoid(np.abs(c_c) ** 2, x=eps_l, axis=1)
+    p_d_eps = np.trapezoid(np.abs(c_d) ** 2, x=eps_l, axis=1)
+    p_c_l = np.trapezoid(np.abs(c_c) ** 2, x=eps, axis=0)
+    p_d_l = np.trapezoid(np.abs(c_d) ** 2, x=eps, axis=0)
 
     fig, axs = plt.subplots(1, 3, figsize=(16, 4.6))
 
